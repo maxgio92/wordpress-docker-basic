@@ -1,0 +1,37 @@
+---
+
+version: "3.7"
+
+services:
+    nginx:
+        build:
+            context: .
+            target: nginx
+        ports:
+            - 80:80
+    php-fpm:
+        build:
+            context: .
+            target: php-fpm
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: wordpress
+            WORDPRESS_DB_PASSWORD: wordpress
+            WORDPRESS_DB_NAME: wordpress
+    php-cli:
+        build:
+            context: .
+            target: php-cli
+        environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_USER: wordpress
+            WORDPRESS_DB_PASSWORD: wordpress
+            WORDPRESS_DB_NAME: wordpress
+    db:
+        image: mysql:5.7
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+            MYSQL_ROOT_PASSWORD: ''
+            MYSQL_USER: 'wordpress'
+            MYSQL_PASSWORD: 'wordpress'
+            MYSQL_DATABASE: 'wordpress'
